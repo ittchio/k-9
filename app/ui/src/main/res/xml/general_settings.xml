@@ -5,6 +5,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/general_settings_title">
 
+    <com.fsck.k9.ui.settings.notifications.DragAndDropPreference
+        android:key="foo"
+        android:summary="Bar"
+        android:title="Foo" />
+
     <PreferenceScreen
         android:icon="?attr/iconPreferencesDisplay"
         android:key="display_preferences"
