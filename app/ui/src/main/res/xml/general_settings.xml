@@ -1,14 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--suppress AndroidElementNotAllowed -->
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><!--suppress AndroidElementNotAllowed -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/general_settings_title">
 
-    <com.fsck.k9.ui.settings.notifications.DragAndDropPreference
+    <Preference
+        android:action="android.intent.action.VIEW"
         android:key="foo"
         android:summary="Bar"
-        android:title="Foo" />
+        android:title="Foo">
+        <intent
+            android:targetClass="com.fsck.k9.ui.settings.notifications.view.DragAndDropPreferenceActivity"
+            android:targetPackage="@string/application_id" />
+    </Preference>
 
     <PreferenceScreen
         android:icon="?attr/iconPreferencesDisplay"
