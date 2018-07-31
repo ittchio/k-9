@@ -12,6 +12,6 @@ class DragAndDropRecyclerView(context: Context, attributeSet: AttributeSet) :
     init {
         adapter = DragAndDropAdapter()
         layoutManager = LinearLayoutManager(context)
-        ItemTouchHelper(ItemTouchHelperCallback(adapter)).attachToRecyclerView(this)
+        //ItemTouchHelper(ItemTouchHelperCallback(adapter)).attachToRecyclerView(this)
     }
 }
