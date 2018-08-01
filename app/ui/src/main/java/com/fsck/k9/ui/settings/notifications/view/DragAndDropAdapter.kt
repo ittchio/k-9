@@ -4,10 +4,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.fsck.k9.ui.R
-import com.fsck.k9.ui.settings.notifications.model.NotificationActionsManager
+import com.fsck.k9.ui.settings.notifications.model.ItemsManagerManagerImpl
 
 
-class DragAndDropAdapter(private val notificationsActionsManager: NotificationActionsManager) :
+class DragAndDropAdapter(private val notifications: ItemsManagerManagerImpl) :
     RecyclerView.Adapter<DragAndDropViewHolder>() {
 
     val itemTouchHelperCallback = object : ItemTouchHelperCallback<DragAndDropViewHolder>() {
@@ -18,7 +18,7 @@ class DragAndDropAdapter(private val notificationsActionsManager: NotificationAc
         ) = onItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition())
     }
 
-    override fun getItemCount() = notificationsActionsManager.count
+    override fun getItemCount() = notifications.count
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DragAndDropViewHolder {
         val layoutInflater = LayoutInflater.from(parent.getContext())
@@ -27,12 +27,11 @@ class DragAndDropAdapter(private val notificationsActionsManager: NotificationAc
     }
 
     override fun onBindViewHolder(holder: DragAndDropViewHolder, position: Int) {
-        holder.bind(notificationsActionsManager[position])
+        holder.bind(notifications[position])
     }
     
     private fun onItemMoved(fromPosition: Int, toPosition: Int): Boolean {
         notifyItemMoved(fromPosition, toPosition);
         return true
     }
-
 }
