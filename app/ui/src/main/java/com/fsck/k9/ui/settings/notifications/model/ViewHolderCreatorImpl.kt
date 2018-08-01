@@ -21,7 +21,7 @@ class ViewHolderCreatorImpl : NotificationActionsViewHolderCreator {
 
     private fun getHeader(parent: ViewGroup) =
         NotificationsActionsViewHolder.Header(getView(R.layout.notifications_actions_item, parent))
-    
+
     private fun getLayoutInflater(parent: ViewGroup) =
         LayoutInflater.from(parent.getContext())
 

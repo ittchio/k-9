@@ -11,7 +11,10 @@ interface ItemsManager {
 
     sealed class Item {
         class Notification(val action: NotificationAction) : Item()
-        class HeaderOne : Item()
-        class HeaderTwo : Item()
+
+        sealed class Header(val title: String, val description: String) : Item() {
+            class HeaderOne(title: String, description: String) : Header(title, description)
+            class HeaderTwo(title: String, description: String) : Header(title, description)
+        }
     }
 }

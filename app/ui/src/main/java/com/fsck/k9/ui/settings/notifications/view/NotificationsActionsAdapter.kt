@@ -9,10 +9,10 @@ class NotificationsActionsAdapter(
     private val itemsManager: ItemsManager,
     private val viewHolderCreator: NotificationActionsViewHolderCreator
 ) :
-    RecyclerView.Adapter<NotificationsActionsViewHolder>() {
+    RecyclerView.Adapter<NotificationsActionsViewHolder<ItemsManager.Item>>() {
 
     val itemTouchHelperCallback =
-        object : ItemTouchHelperCallback<NotificationsActionsViewHolder>() {
+        object : ItemTouchHelperCallback<NotificationsActionsViewHolder<ItemsManager.Item>>() {
             override fun onMove(
                 recyclerView: RecyclerView?,
                 viewHolder: RecyclerView.ViewHolder,
@@ -25,11 +25,13 @@ class NotificationsActionsAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): NotificationsActionsViewHolder =
+    ): NotificationsActionsViewHolder<ItemsManager.Item> =
         viewHolderCreator.createHolder(parent, viewType)
 
-    override fun onBindViewHolder(holder: NotificationsActionsViewHolder, position: Int) =
-        holder.bind(itemsManager[position])
+    override fun onBindViewHolder(
+        holder: NotificationsActionsViewHolder<ItemsManager.Item>,
+        position: Int
+    ) = holder.bind(itemsManager[position])
 
     private fun onItemMoved(fromPosition: Int, toPosition: Int): Boolean {
         if (itemsManager.moveIsSucessful(fromPosition, toPosition)) {
