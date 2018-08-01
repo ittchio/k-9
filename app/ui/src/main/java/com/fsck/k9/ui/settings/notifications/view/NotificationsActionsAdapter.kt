@@ -4,10 +4,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.fsck.k9.ui.R
-import com.fsck.k9.ui.settings.notifications.model.ItemsManagerManagerImpl
+import com.fsck.k9.ui.settings.notifications.model.ItemsManagerManager
+import com.fsck.k9.ui.settings.notifications.model.ViewHolderCreator
 
-
-class DragAndDropAdapter(private val notifications: ItemsManagerManagerImpl) :
+class DragAndDropAdapter(
+    private val itemsManager: ItemsManagerManager,
+    private val vievHolderCreator: ViewHolderCreator
+) :
     RecyclerView.Adapter<DragAndDropViewHolder>() {
 
     val itemTouchHelperCallback = object : ItemTouchHelperCallback<DragAndDropViewHolder>() {
@@ -18,7 +21,7 @@ class DragAndDropAdapter(private val notifications: ItemsManagerManagerImpl) :
         ) = onItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition())
     }
 
-    override fun getItemCount() = notifications.count
+    override fun getItemCount() = itemsManager.count
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DragAndDropViewHolder {
         val layoutInflater = LayoutInflater.from(parent.getContext())
@@ -27,11 +30,31 @@ class DragAndDropAdapter(private val notifications: ItemsManagerManagerImpl) :
     }
 
     override fun onBindViewHolder(holder: DragAndDropViewHolder, position: Int) {
-        holder.bind(notifications[position])
+        holder.bind(itemsManager[position])
     }
-    
+
     private fun onItemMoved(fromPosition: Int, toPosition: Int): Boolean {
-        notifyItemMoved(fromPosition, toPosition);
-        return true
+        if (itemsManager.moveIsSucessful(fromPosition, toPosition)) {
+            notifyItemMoved(fromPosition, toPosition);
+            return true
+        }
+        return false
+    }
+
+    override fun getItemViewType(position: Int) = itemsManager.getItemViewType(position)
+
+    companion object {
+        private val TAG = DragAndDropAdapter::class.simpleName!!
+    }
+
+    class ViewType {
+        companion object {
+            @JvmField
+            val NORMAL = 0
+            @JvmField
+            val HEADER_1 = 1
+            @JvmField
+            val HEADER_2 = 2
+        }
     }
 }

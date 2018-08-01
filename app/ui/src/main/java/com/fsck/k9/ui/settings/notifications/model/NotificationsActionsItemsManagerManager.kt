@@ -4,4 +4,8 @@ interface ItemsManagerManager {
     val count: Int
 
     operator fun get(position: Int): NotificationAction
+
+    fun moveIsSucessful(fromPosition: Int, toPosition: Int): Boolean
+
+    fun getItemViewType(position: Int): Int
 }
