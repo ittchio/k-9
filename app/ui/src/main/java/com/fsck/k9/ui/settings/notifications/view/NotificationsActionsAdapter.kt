@@ -1,37 +1,35 @@
 package com.fsck.k9.ui.settings.notifications.view
 
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.fsck.k9.ui.R
-import com.fsck.k9.ui.settings.notifications.model.ItemsManagerManager
-import com.fsck.k9.ui.settings.notifications.model.ViewHolderCreator
+import com.fsck.k9.ui.settings.notifications.model.ItemsManager
+import com.fsck.k9.ui.settings.notifications.model.NotificationActionsViewHolderCreator
 
-class DragAndDropAdapter(
-    private val itemsManager: ItemsManagerManager,
-    private val vievHolderCreator: ViewHolderCreator
+class NotificationsActionsAdapter(
+    private val itemsManager: ItemsManager,
+    private val viewHolderCreator: NotificationActionsViewHolderCreator
 ) :
-    RecyclerView.Adapter<DragAndDropViewHolder>() {
+    RecyclerView.Adapter<NotificationsActionsViewHolder>() {
 
-    val itemTouchHelperCallback = object : ItemTouchHelperCallback<DragAndDropViewHolder>() {
-        override fun onMove(
-            recyclerView: RecyclerView?,
-            viewHolder: RecyclerView.ViewHolder,
-            target: RecyclerView.ViewHolder
-        ) = onItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition())
-    }
+    val itemTouchHelperCallback =
+        object : ItemTouchHelperCallback<NotificationsActionsViewHolder>() {
+            override fun onMove(
+                recyclerView: RecyclerView?,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ) = onItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition())
+        }
 
     override fun getItemCount() = itemsManager.count
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DragAndDropViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.getContext())
-        val view = layoutInflater.inflate(R.layout.drag_and_drop_item, parent, false)
-        return DragAndDropViewHolder(view)
-    }
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): NotificationsActionsViewHolder =
+        viewHolderCreator.createHolder(parent, viewType)
 
-    override fun onBindViewHolder(holder: DragAndDropViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: NotificationsActionsViewHolder, position: Int) =
         holder.bind(itemsManager[position])
-    }
 
     private fun onItemMoved(fromPosition: Int, toPosition: Int): Boolean {
         if (itemsManager.moveIsSucessful(fromPosition, toPosition)) {
@@ -42,10 +40,6 @@ class DragAndDropAdapter(
     }
 
     override fun getItemViewType(position: Int) = itemsManager.getItemViewType(position)
-
-    companion object {
-        private val TAG = DragAndDropAdapter::class.simpleName!!
-    }
 
     class ViewType {
         companion object {
