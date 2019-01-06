@@ -4,8 +4,6 @@ import android.app.NotificationManager
 import android.content.Context
 import android.support.v4.app.NotificationManagerCompat
 import com.fsck.k9.AccountPreferenceSerializer
-import com.fsck.k9.LocalKeyStoreManager
-import com.fsck.k9.mail.ssl.LocalKeyStore
 import org.koin.dsl.module.applicationContext
 import java.util.concurrent.Executors
 
